@@ -33,35 +33,61 @@ class Personaje:
     
     def atacar(self, enemigo):
         daño = self.dmg(enemigo)
-        # Asegurarse de que la vida no baje de cero
-        enemigo.vida = max(0, enemigo.vida - daño)
-        print(self.nombre, "Ha realizado", daño, "puntos de daño a", enemigo.nombre)
-        print("Vida de", enemigo.nombre, "es", enemigo.vida)
+        enemigo.recibir_daño(daño)
+        print(self.nombre, "ha realizado", daño, "puntos de daño a", enemigo.nombre)
 
-class Guerrero (Personaje):
-    #Sobrescribir constructor
-    def __init__(self, nombre, fuerza, inteligencia, defensa, vida, espada):
+    def recibir_daño(self, daño):
+        self.vida = max(0, self.vida - daño)
+
+class Guerrero(Personaje):
+    # Sobrescribir constructor
+    def __init__(self, nombre, fuerza, inteligencia, defensa, vida, espada, escudo):
         super().__init__(nombre, fuerza, inteligencia, defensa, vida)
-        self.espada = espada 
+        self.espada = espada
+        self.escudo = escudo
+        self.vida_escudo = defensa * escudo
 
-    #Sobrescribir impresion
+    # Sobrescribir impresión
     def imprimir_atributos(self):
         super().imprimir_atributos()
         print("-Espada:", self.espada)
-        
-    def elegir_arma(self):
-        opcion = int(input("Elige un arma: \n(1)lanza de obsidiana, dmg 10 \n(2)Lanza de chaya, dmg 6\n<<"))
-        if opcion == 1:
-            self.espada = 10
-        elif opcion == 2:
-            self.espada == 5
-        else:
-            print("Opcion no valida")
-            self.elegir_arma()
-    
-    #Sobrescribir calculo de dmg
+        print("-Escudo:", self.escudo, "(Vida del escudo:", self.vida_escudo, ")")
+
+    # Sobrescribir cálculo de daño
     def dmg(self, enemigo):
-        return self.fuerza*self.espada - enemigo.defensa
+        return max(0, self.fuerza * self.espada - enemigo.defensa)
+
+    # Sobrescribir recibir daño para manejar el escudo
+    def recibir_daño(self, daño):
+        if self.vida_escudo > 0:
+            if daño < self.vida_escudo:
+                self.vida_escudo -= daño
+                print(self.nombre, "ha absorbido el daño con el escudo. Vida del escudo restante:", self.vida_escudo)
+            elif daño == self.vida_escudo:
+                self.vida_escudo = 0
+                print(self.nombre, "ha perdido el escudo. Ahora está desprotegido.")
+            else:
+                daño_restante = daño - self.vida_escudo
+                self.vida_escudo = 0
+                print(self.nombre, "ha perdido el escudo. Daño restante aplicado a la vida:", daño_restante)
+                super().recibir_daño(daño_restante)
+        else:
+            super().recibir_daño(daño)
+
+# Método de combate por turnos
+def combate(personaje1, personaje2):
+    turno = 1
+    while personaje1.esta_vivo() and personaje2.esta_vivo():
+        print(f"\n--- Turno {turno} ---")
+        personaje1.atacar(personaje2)
+        if personaje2.esta_vivo():
+            personaje2.atacar(personaje1)
+        turno += 1
+
+    if personaje1.esta_vivo():
+        print(f"\n{personaje1.nombre} ha ganado el combate.")
+    else:
+        print(f"\n{personaje2.nombre} ha ganado el combate.")
  
 class Mago (Personaje):
     #Sobrescribir constructor
@@ -88,12 +114,13 @@ class Mago (Personaje):
     def dmg(self, enemigo):
         return self.inteligencia*self.libro - enemigo.defensa
 
-michael_jackson = Personaje("***Michael Jackon***", 20, 15, 10, 100)           
-tlatoani = Guerrero("***Apocalipto***", 50, 70, 30, 100, 5)
-merlin = Mago("**Merlin***", 20, 15, 10, 100, 5)
+#michael_jackson = Personaje("***Michael Jackon***", 40, 15, 10, 100)           
+#tlatoani = Guerrero("***Apocalipto***", 50, 70, 30, 100, 5, 2)
+#merlin = Mago("**Merlin***", 20, 15, 10, 100, 5)
 
-#tlatoani.elegir_arma()
-#merlin.elegir_arma()
+"""
+tlatoani.elegir_arma()
+merlin.elegir_arma()
 
 #Imprimir atributos antes de la tragedia
 tlatoani.imprimir_atributos()
@@ -109,6 +136,20 @@ merlin.atacar(michael_jackson)
 tlatoani.imprimir_atributos()
 merlin.imprimir_atributos()
 michael_jackson.imprimir_atributos()
+"""
+# Ejemplo de uso
+if __name__ == "__main__":
+    tlatoani = Guerrero("***Apocalipto***", 1, 70, 5, 100, 5, 2)
+    merlin = Mago("**Merlin***", 1, 1, 10, 100, 7)
+
+    tlatoani.imprimir_atributos()
+    merlin.imprimir_atributos()
+
+    combate(tlatoani, merlin)
+
+    tlatoani.imprimir_atributos()
+    merlin.imprimir_atributos()
+
 '''
 # Ejemplo de uso
 mi_personaje = Personaje('DRILLO', 40, 10, 30, 100)
