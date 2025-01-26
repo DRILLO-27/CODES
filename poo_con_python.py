@@ -136,10 +136,20 @@ def personaje_con_mayor_vida(personajes):
 def suma_total_inteligencia(personajes):
     return sum(p.inteligencia for p in personajes)
 
+# Función para filtrar personajes con vida mayor a un valor dado
+def filtrar_personajes_por_vida(personajes, valor_vida):
+    personajes_filtrados = [p for p in personajes if p.vida > valor_vida]
+    if personajes_filtrados:
+        print(f"\nPersonajes con vida mayor a {valor_vida}:")
+        for p in personajes_filtrados:
+            print(f"- {p.nombre}: {p.vida} de vida")
+    else:
+        print(f"No hay personajes con vida mayor a {valor_vida}.")
+        
 # Ejemplo de uso
 if __name__ == "__main__":
     tlatoani = Guerrero("***Apocalipto***", 1, 70, 5, 100, 5, 2)
-    merlin = Mago("**Merlin***", 1, 1, 10, 100, 7)
+    merlin = Mago("**Merlin***", 1, 1, 10, 111, 7)
     michael_jackson = Personaje("***Michael Jackon***", 40, 15, 10, 120)
 
     personajes = [tlatoani, merlin, michael_jackson]
@@ -158,6 +168,9 @@ if __name__ == "__main__":
 
     suma_inteligencia = suma_total_inteligencia(personajes)
     print(f"La suma total de la inteligencia de todos los personajes es: {suma_inteligencia}")
+    
+    valor_vida = int(input("Ingrese un valor de vida para filtrar personajes: "))
+    filtrar_personajes_por_vida(personajes, valor_vida)
 
     michael_jackson.imprimir_atributos()
     tlatoani.imprimir_atributos()
