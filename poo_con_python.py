@@ -132,6 +132,10 @@ def usar_pocion(personaje, tipo_pocion):
 def personaje_con_mayor_vida(personajes):
     return max(personajes, key=lambda p: p.vida)
 
+# Función para calcular la suma total de inteligencia de todos los personajes
+def suma_total_inteligencia(personajes):
+    return sum(p.inteligencia for p in personajes)
+
 # Ejemplo de uso
 if __name__ == "__main__":
     tlatoani = Guerrero("***Apocalipto***", 1, 70, 5, 100, 5, 2)
@@ -152,7 +156,9 @@ if __name__ == "__main__":
     personaje_mas_vida = personaje_con_mayor_vida(personajes)
     print(f"\nEl personaje con mayor vida es: {personaje_mas_vida.nombre} con {personaje_mas_vida.vida} de vida.")
 
+    suma_inteligencia = suma_total_inteligencia(personajes)
+    print(f"La suma total de la inteligencia de todos los personajes es: {suma_inteligencia}")
+
     michael_jackson.imprimir_atributos()
     tlatoani.imprimir_atributos()
     merlin.imprimir_atributos()
-    
