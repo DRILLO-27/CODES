@@ -128,50 +128,31 @@ def usar_pocion(personaje, tipo_pocion):
     else:
         print("Tipo de poción no válido.")
 
-#michael_jackson = Personaje("***Michael Jackon***", 40, 15, 10, 100)           
-#tlatoani = Guerrero("***Apocalipto***", 50, 70, 30, 100, 5, 2)
-#merlin = Mago("**Merlin***", 20, 15, 10, 100, 5)
+# Función para encontrar el personaje con mayor vida
+def personaje_con_mayor_vida(personajes):
+    return max(personajes, key=lambda p: p.vida)
 
-"""
-tlatoani.elegir_arma()
-merlin.elegir_arma()
-
-#Imprimir atributos antes de la tragedia
-tlatoani.imprimir_atributos()
-merlin.imprimir_atributos()
-michael_jackson.imprimir_atributos()
-
-#Ataques masivos nucleares 3000
-michael_jackson.atacar(tlatoani)
-tlatoani.atacar(merlin)
-merlin.atacar(michael_jackson)
-
-#Imprimir atributos despues de la tragedia
-tlatoani.imprimir_atributos()
-merlin.imprimir_atributos()
-michael_jackson.imprimir_atributos()
-"""
 # Ejemplo de uso
 if __name__ == "__main__":
-    tlatoani = Guerrero("***Apocalipto***", 50, 70, 50, 100, 5, 2)
-    merlin = Mago("**Merlin***", 10, 40, 10, 100, 2)
+    tlatoani = Guerrero("***Apocalipto***", 1, 70, 5, 100, 5, 2)
+    merlin = Mago("**Merlin***", 1, 1, 10, 100, 7)
+    michael_jackson = Personaje("***Michael Jackon***", 40, 15, 10, 120)
 
+    personajes = [tlatoani, merlin, michael_jackson]
+
+    #tlatoani.imprimir_atributos()
+    #merlin.imprimir_atributos()
+
+    #usar_pocion(tlatoani, "vida")
+    #usar_pocion(merlin, "fuerza")
+    #usar_pocion(merlin, "inteligencia")
+
+    #combate(tlatoani, merlin)
+
+    personaje_mas_vida = personaje_con_mayor_vida(personajes)
+    print(f"\nEl personaje con mayor vida es: {personaje_mas_vida.nombre} con {personaje_mas_vida.vida} de vida.")
+
+    michael_jackson.imprimir_atributos()
     tlatoani.imprimir_atributos()
     merlin.imprimir_atributos()
-
-    usar_pocion(tlatoani, "vida")
-    usar_pocion(merlin, "fuerza")
-    usar_pocion(merlin, "inteligencia")
-
-    combate(tlatoani, merlin)
-
-    tlatoani.imprimir_atributos()
-    merlin.imprimir_atributos()
-
-'''
-# Ejemplo de uso
-mi_personaje = Personaje('DRILLO', 40, 10, 30, 100)
-mi_personaje.imprimir_atributos()
-mi_enemigo = Personaje("Vergil", 70, 30, 70, 100)
-mi_personaje.atacar(mi_enemigo)
-'''
+    
