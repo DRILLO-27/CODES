@@ -114,6 +114,20 @@ class Mago (Personaje):
     def dmg(self, enemigo):
         return self.inteligencia*self.libro - enemigo.defensa
 
+# Función para manejar las pociones
+def usar_pocion(personaje, tipo_pocion):
+    if tipo_pocion == "vida":
+        personaje.vida += 20
+        print(f"{personaje.nombre} ha usado una poción de vida. Vida actual: {personaje.vida}")
+    elif tipo_pocion == "fuerza":
+        personaje.fuerza = int(personaje.fuerza * 1.5)
+        print(f"{personaje.nombre} ha usado una poción de fuerza. Fuerza actual: {personaje.fuerza}")
+    elif tipo_pocion == "inteligencia":
+        personaje.inteligencia = int(personaje.inteligencia * 1.5)
+        print(f"{personaje.nombre} ha usado una poción de inteligencia. Inteligencia actual: {personaje.inteligencia}")
+    else:
+        print("Tipo de poción no válido.")
+
 #michael_jackson = Personaje("***Michael Jackon***", 40, 15, 10, 100)           
 #tlatoani = Guerrero("***Apocalipto***", 50, 70, 30, 100, 5, 2)
 #merlin = Mago("**Merlin***", 20, 15, 10, 100, 5)
@@ -139,11 +153,15 @@ michael_jackson.imprimir_atributos()
 """
 # Ejemplo de uso
 if __name__ == "__main__":
-    tlatoani = Guerrero("***Apocalipto***", 1, 70, 5, 100, 5, 2)
-    merlin = Mago("**Merlin***", 1, 1, 10, 100, 7)
+    tlatoani = Guerrero("***Apocalipto***", 50, 70, 50, 100, 5, 2)
+    merlin = Mago("**Merlin***", 10, 40, 10, 100, 2)
 
     tlatoani.imprimir_atributos()
     merlin.imprimir_atributos()
+
+    usar_pocion(tlatoani, "vida")
+    usar_pocion(merlin, "fuerza")
+    usar_pocion(merlin, "inteligencia")
 
     combate(tlatoani, merlin)
 
